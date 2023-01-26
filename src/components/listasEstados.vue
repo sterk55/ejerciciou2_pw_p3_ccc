@@ -11,12 +11,12 @@
   <table>
     <tr>
         <td><h3>Ingrese la Inicial: </h3></td>
-        <td><input  onkeypress="13" v-model="verInfo" type="text" name="iniciales" id="inicialId"></td>
+        <td><input  v-on:keyup.enter="buscar" v-model="verInfo" type="text" name="iniciales" id="inicialId"></td>
     </tr>
     </table>
     <table>
     <tr>
-        <td><button v-on:click="buscar">Buscar</button></td>
+        
     </tr>
     <tr><td><h3>La informacion Final es la Siguiente: </h3></td></tr>
   </table>
@@ -97,7 +97,7 @@ export default {
         },
         buscar(){
             this.consumirApiInformacion(document.getElementById('inicialId').value)
-            this.consumirAPIEstado()
+            
 
         },
         async APIListarCodigosEstado() {
