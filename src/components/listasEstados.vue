@@ -1,77 +1,13 @@
 <template>
   <h1>Lista de Estados</h1>
-  <table>
-    <tr>
-        <td><p>{{data1}}</p></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-  </table>
+    <div>
+        <ul class="tabla-estados">
+
+            <li v-for="(estado, indice) in codigoEstados" :key="indice">{{ estado }}</li>
+
+
+        </ul>
+    </div>
   <table>
     <tr>
         <td><h3>Ingrese la Inicial: </h3></td>
@@ -115,8 +51,9 @@
 <script>
 export default {
     data(){
+        
         return{
-            state:[],
+            codigoEstados : null,
             inicial:"",
             positivos:null,
             totalTest:null,
@@ -162,7 +99,15 @@ export default {
             this.consumirApiInformacion(document.getElementById('inicialId').value)
             this.consumirAPIEstado()
 
-        } 
+        },
+        async APIListarCodigosEstado() {
+             const estados = await fetch("https://api.covidtracking.com/v1/states/current.json" ).then((r) => r.json());
+             const codigoEstados = [];
+             for (let i = 0; i <= 55; i++) {
+                codigoEstados.push(estados[i].state);
+                } 
+                this.codigoEstados = codigoEstados
+             }
     },
     watch:{
         verInfoo(value){
@@ -177,6 +122,34 @@ export default {
             console.log("vamos a consumir el API")
             this.consumirAPI()*/
         }
+        },
+        mounted(){
+          this.codigoEstados =  this.APIListarCodigosEstado()
+          console.log("Se lanzo")
+        },
+        beforeCreate(){
+            console.log("beforeCreate")
+        },
+        beforeUpdate(){
+            console.log("beforeUpdate")
+        },
+        beforeMount(){
+            console.log("beforeMount")
+        },
+        beforeUnmount(){
+            console.log("beforeUnmount")
+        },
+        created(){
+            console.log("created")
+        },
+        updated(){
+            console.log("update")
+        },
+        activated(){
+            console.log("activated")
+        },
+        deactivated(){
+            console.log("deactivated")
         }
     }
 
@@ -186,4 +159,13 @@ export default {
 table{
     margin: 0 auto;
 }
+.tabla-estados {
+    list-style: none;
+display: grid;
+grid-template-columns: auto auto auto auto;
+background-color: #00026d ;
+color: #29a7a0;
+width: 200px;
+margin: auto;
+padding: 10px;}
 </style>
